@@ -1,6 +1,6 @@
 <?php
 function db_create(){
-$serverName = "localhost";
+$serverName = "localhost:3306";
 $username = "root";
 $password = "";
 
@@ -30,7 +30,7 @@ $conn -> close();
 }
 
 function db_connect(){
-$serverName = "localhost";
+$serverName = "localhost:3306";
 $username = "root";
 $password = "";
 $dbName = "videogamedb";
@@ -46,13 +46,20 @@ return $conn;
 function table_create(){
 	#create tables
 	$conn = db_connect();
+	$sql = "DROP TABLE videogame";
+
+if($conn->query($sql) === TRUE){
+	echo "Table dropped successfully!";
+} else {
+	echo "Error: " . $conn->error;
+}
     $sql = "CREATE TABLE videogame(
 	Title  VARCHAR(50),
 	ReleaseDate DATE,
 	Price DOUBLE(5,2),
-	Rating VARCHAR(5),
+	Rating VARCHAR(15),
 	Series VARCHAR(50),
-	LinkToCoverImage VARCHAR(256), 
+	LinkToCoverImage VARCHAR(256) DEFAULT 'blankCover.png', 
 	PRIMARY KEY (Title)
 	)";
 

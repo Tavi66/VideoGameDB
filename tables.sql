@@ -16,7 +16,7 @@ ReleaseDate DATE,
 #Genre VARCHAR(30), #join w/ 'genre' table
 Price DOUBLE(5,2),
 #Platform VARCHAR(25), #join w/ 'platforms' table
-Rating VARCHAR(5),
+Rating VARCHAR(15),
 #Region VARCHAR(4),
 Series VARCHAR(50),
 LinkToCoverImage VARCHAR(256) DEFAULT 'blankCover.png', 
