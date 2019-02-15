@@ -3,8 +3,10 @@ SELECT * FROM videogame;
 SELECT * FROM genre;
 #GET table with specific genre
 SELECT * FROM genre WHERE Genre = 'Adventure';
-#DROP TABLE genre;
 
+
+DROP TABLE genre;
+DROP TABLE videogame;
 #JOIN video game title and genre(s) relation
 SELECT videogame.ReleaseDate, videogame.Title, genre.Genre
 FROM genre INNER JOIN videogame 
@@ -31,8 +33,14 @@ INSERT INTO genre (videoGameTitle, Genre)
 VALUES ('The Liar Princess and the Blind Prince', 'Adventure');
 INSERT INTO genre (videoGameTitle, Genre)
 VALUES ('The Liar Princess and the Blind Prince', 'RPG');
+#INSERT
+INSERT INTO videogame (Title,ReleaseDate,Price,Series)
+VALUES ('Super Smash Bros. Ultimate', '2018-12-07',59.99, 'Super Smash Bros.');
 #UPDATE
 #UPDATE game cover
 UPDATE videogame
 SET  LinkToCoverImage = 'https://upload.wikimedia.org/wikipedia/en/b/b0/Persona_5_cover_art.jpg'
 WHERE Title = 'Persona 5';
+UPDATE videogame
+SET  LinkToCoverImage = 'https://upload.wikimedia.org/wikipedia/en/f/fb/Liar_Princess_and_the_Blind_Prince_Box_Art.jpg'
+WHERE Title = 'The Liar Princess and the Blind Prince';

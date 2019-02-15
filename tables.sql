@@ -19,7 +19,7 @@ Price DOUBLE(5,2),
 Rating VARCHAR(5),
 #Region VARCHAR(4),
 Series VARCHAR(50),
-LinkToCoverImage VARCHAR(256), 
+LinkToCoverImage VARCHAR(256) DEFAULT 'blankCover.png', 
 #Retailer VARCHAR(20); #join with 'retailer' table
 PRIMARY KEY (Title)
 );
