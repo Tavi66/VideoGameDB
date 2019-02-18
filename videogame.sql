@@ -19,7 +19,7 @@ DELETE FROM videogame WHERE Title='Persona 5';
 
 #INSERT videogame info. (+genre, region, retailer, etc.)
 INSERT INTO videogame (Title,ReleaseDate,Rating,Price,Series)
-VALUES ('Persona 5', '2016-09-15', 'M',59.99,'Persona');
+VALUES ('Persona 5', '2016-09-15', 'Mature +17',59.99,'Persona');
 INSERT INTO genre (videoGameTitle, Genre)
 VALUES ('Persona 5', 'RPG');
 INSERT INTO genre (videoGameTitle, Genre)
