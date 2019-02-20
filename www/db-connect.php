@@ -46,25 +46,32 @@ return $conn;
 function table_create(){
 	#create tables
 	$conn = db_connect();
-	$sql = "DROP TABLE videogame";
+	#$sql = "DROP TABLE videogame";
 
-if($conn->query($sql) === TRUE){
-	echo "Table dropped successfully!";
-} else {
-	echo "Error: " . $conn->error;
-}
-    $sql = "CREATE TABLE videogame(
-	Title  VARCHAR(50),
-	ReleaseDate DATE,
-	Price DOUBLE(5,2),
-	Rating VARCHAR(15),
-	Series VARCHAR(50),
-	LinkToCoverImage VARCHAR(256) DEFAULT 'blankCover.png', 
-	PRIMARY KEY (Title)
+// if($conn->query($sql) === TRUE){
+// 	echo "Table dropped successfully!";
+// } else {
+// 	echo "Error: " . $conn->error;
+// }
+//     $sql = "CREATE TABLE videogame(
+// 	Title  VARCHAR(50),
+// 	ReleaseDate DATE,
+// 	Price DOUBLE(5,2),
+// 	Rating VARCHAR(15),
+// 	Series VARCHAR(50),
+// 	LinkToCoverImage VARCHAR(256) DEFAULT 'blankCover.png', 
+// 	PRIMARY KEY (Title)
+// 	)";
+
+$sql = "CREATE TABLE user (
+	name VARCHAR(20) NOT NULL,
+	username VARCHAR(20),
+	password VARCHAR(30) NOT NULL,
+	privilege INT default 0,
+	PRIMARY KEY (username)
 	)";
-
 if($conn->query($sql)) {
-	echo "Table videogame created successfully!";
+	echo "Table created successfully!";
 } else {
 	echo "Error: " . $conn->error;
 }

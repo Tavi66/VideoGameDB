@@ -27,7 +27,6 @@ include_once('db-connect.php');
 <input type="submit" value ="Login" name="loginButton"/>
 </form>
 <br>
-<a href="home.php" style="color:black;"> Home page </a>
 <!-- END OF BODY -->
 </body>
 <!-- SCRIPT -->

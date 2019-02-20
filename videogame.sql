@@ -1,16 +1,24 @@
+#GET videogame table
 SELECT * FROM videogame;
-
+#GET table with specific attribute in videogame
+SELECT * FROM videogame WHERE Price = 59.99;
+#GET genre table
 SELECT * FROM genre;
 #GET table with specific genre
-SELECT * FROM genre WHERE Genre = 'Adventure';
+SELECT * FROM genre WHERE Genre = 'RPG';
 
-
+#DROP genre and videogame tables
 DROP TABLE genre;
 DROP TABLE videogame;
+#PROJECTION
+#DIVISION 
+#cuts out duplicates that have a match(es) 
+#DIVISION useful for genres
 #JOIN video game title and genre(s) relation
-SELECT videogame.ReleaseDate, videogame.Title, genre.Genre
+#INNER JOIN genre and videogame 
+SELECT videogame.ReleaseDate, videogame.Title, videogame.Rating, genre.Genre
 FROM genre INNER JOIN videogame 
-WHERE videogame.Title=genre.videoGameTitle;
+WHERE videogame.Title=genre.videoGameTitle AND genre.Genre = 'RPG';
 
 #DELETE videogame
 #if removing video game, must delete from genre, retailers, etc. tables before deleting from videogame table
@@ -44,3 +52,6 @@ WHERE Title = 'Persona 5';
 UPDATE videogame
 SET  LinkToCoverImage = 'https://upload.wikimedia.org/wikipedia/en/f/fb/Liar_Princess_and_the_Blind_Prince_Box_Art.jpg'
 WHERE Title = 'The Liar Princess and the Blind Prince';
+#AGGREGATE total video game entries
+SELECT COUNT(*)
+FROM videogame;
