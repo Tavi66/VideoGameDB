@@ -5,8 +5,7 @@ SELECT username, name, privilege FROM user WHERE username = 'vi';
 DELETE FROM user WHERE username='reyner';
 #INSERT into user table
 #Administrator user. Admin privilege entered.
-INSERT INTO user (name,username,password,privilege)
-VALUES ('vi','vi','queen',1);
+INSERT INTO user VALUES ('vi','vi','queen',1);
 INSERT INTO user (name,username,password,privilege)
 VALUES ('dzung','dzung','chronos',1);
 #Standard user. default privilege used.

@@ -15,20 +15,17 @@ include_once('db-connect.php');
 <link href="index.css" rel="stylesheet"  type="text/css">
 </head>
 <!-- -->
-<body style="margin:10%;">
+<body>
 <!-- BODY -->
 <!-- NAVBAR -->
 
 <!-- LOGIN form --> <!-- login to modify personal lists-->
-<div style="text-align: center;">
-<form class ="centered" action="login.php" method="post">
+<form id ="centered" action="register.php" method="post">
+<input type="text" id="loginTextBox" name="name" placeholder="name"/> <br>
 <input type="text" id="loginTextBox" name="username" placeholder="username"/> <br>
 <input type="password" id="loginTextBox" name="password" placeholder="password"/> <br>
-<input type="submit" value ="Login" name="loginButton"/> <br>
-
-<input type="submit" value ="Register" name="registerStandardUserButton"/>
+<input type="submit" value ="Register" name="standardRegisterButton"/>
 </form>
-</div>
 <br>
 <a href="home.php" style="color:black;"> Home page </a>
 <!-- END OF BODY -->

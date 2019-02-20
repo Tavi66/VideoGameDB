@@ -1,5 +1,5 @@
 body{
-    background-color: rgb(254, 255, 173);
+    background-color: rgb(73, 119, 92);
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 h1{
@@ -26,8 +26,27 @@ a:link, a:visited   {
     background-color: rgb(7, 199, 151);
     color: rgb(236, 236, 236);
 }
+#userTable {
+   border-collapse:collapse;   
+}
+#userTable th,td{
+    padding: 5px;
+   border: 1px solid lightgray;   
+   border-color:black;
+}
 
-#gameCover {
-    width: 40px;
-    height: 60px;
+#loginTextBox {
+    background-color: rgba(66, 66, 66, 0.5);
+    color:white;
+    font-size: 16pt;
+    border-radius: 10px;
+    border: none;
+    padding: 5px;
+    margin: 5px;
+}
+
+form .centered{
+    display: inline-block;
+    margin-left: auto;
+    margin-right: auto;
 }
