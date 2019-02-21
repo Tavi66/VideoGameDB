@@ -1,5 +1,5 @@
 body{
-    background-color: rgb(73, 119, 92);
+    background-color: rgb(125, 243, 208);
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 h1{
@@ -29,6 +29,14 @@ a:link, a:visited   {
 #userTable {
    border-collapse:collapse;   
 }
+#videoGameTable {
+   border-collapse:collapse;   
+}
+#videoGameTable th,td{
+    padding: 5px;
+   border: 1px solid lightgray;   
+   border-color:black;
+}
 #userTable th,td{
     padding: 5px;
    border: 1px solid lightgray;   
@@ -36,15 +44,36 @@ a:link, a:visited   {
 }
 
 #loginTextBox {
-    background-color: rgba(66, 66, 66, 0.5);
-    color:white;
+    background-color: rgba(255, 255, 255, 0.5);
+    color:black;
     font-size: 16pt;
     border-radius: 10px;
     border: none;
     padding: 5px;
     margin: 5px;
 }
-
+#loginButton {
+    background-color: rgba(255, 255, 255, 0.75);
+    color:black;
+    font-size: 14pt;
+    border: none;
+    border-radius: 20px;
+    padding-left: 20px;
+    padding-right: 20px;
+    padding-bottom: 5px;
+    padding-top: 5px;
+    margin: 5px;
+}
+#loginButton:hover {
+    background-color: rgba(119, 119, 119, 0.75);
+    color:black;
+    font-size: 14pt;
+    border: none;
+    border-radius: 20px;
+    padding-left: 20px;
+    padding-right: 20px;
+    margin: 5px;
+}
 form .centered{
     display: inline-block;
     margin-left: auto;

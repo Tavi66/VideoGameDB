@@ -12,6 +12,7 @@ include_once('db-connect.php');
 <head>
 <!-- -->
 <title> Home </title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
 <link href="index.css" rel="stylesheet"  type="text/css">
 </head>
 <!-- -->
@@ -22,9 +23,9 @@ include_once('db-connect.php');
 <!-- LOGIN form --> <!-- login to modify personal lists-->
 <div style="text-align: center;">
 <form class ="centered" action="login.php" method="post">
-<input type="text" id="loginTextBox" name="username" placeholder="username"/> <br>
-<input type="password" id="loginTextBox" name="password" placeholder="password"/> <br>
-<input type="submit" value ="Login" name="loginButton"/> <br>
+<i class="material-icons">account_circle</i> <input type="text" id="loginTextBox" name="username" placeholder= "Username"/> <br>
+<i class="material-icons">lock</i> <input type="password" id="loginTextBox" name="password" placeholder="Password"/> <br>
+<input type="submit" value ="Login" id="loginButton" name="loginButton"/> <br>
 
 <input type="submit" value ="Register" name="registerStandardUserButton"/>
 </form>

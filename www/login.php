@@ -32,16 +32,16 @@ if(isset($_POST['loginButton']))
         //session_register($user);
         //$_SESSION['login_user'] = $user;
         // Set session variables
-        $sql = "SELECT username,name,privilege FROM user WHERE username = '$user'";
-        $result = $conn->query($sql);
+        // $sql = "SELECT username,name,privilege FROM user WHERE username = '$user'";
+         $result = $conn->query($sql);
     
             while ($row = $result->fetch_assoc()) {
                 if($user == $row["username"] && $pwd == $row["password"])
               {
                 echo "Login success!";
-                $_SESSION['username'] = $row["username"];
-                $_SESSION['name'] = $row["name"];
-                $_SESSION['privilege'] = $row["privilege"]; 
+                $_SESSION["username"] = $row["username"];
+                $_SESSION["name"] = $row["name"];
+                $_SESSION["privilege"] = $row["privilege"]; 
               }  else
               {
                   echo "Invalid username or password.";
@@ -53,14 +53,14 @@ if(isset($_POST['loginButton']))
             // echo $_SESSION['name'];
             // echo $_SESSION['privilege'];
 
-        // switch($_SESSION["privilege"])
-        // {
-        //     //standard user
-        //     case 0: header("location: home.php");
-        //     break;
-        //     case 1: header("location: admin.php");
-        //     break;
-        // }
+        switch($_SESSION["privilege"])
+        {
+            //standard user
+            case 0: header("location: home.php");
+            break;
+            case 1: header("location: admin.php");
+            break;
+        }
         
     } else{
         echo "Error: " . $sql . "<br>" . $conn->error;
