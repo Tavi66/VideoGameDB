@@ -2,7 +2,7 @@
 require_once('db-connect.php');
 session_start();
     //for standard user registration
-if(isset($_POST['standardRegisterButton']))
+if(isset($_POST['register-submit']))
 {
     $user = $_POST['username'];
     $name = $_POST['name'];
