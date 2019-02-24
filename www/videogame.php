@@ -71,11 +71,11 @@ for($i=0; $i<count($box); $i++)
 			$TITLE = $titleTemp[0];
 		$title = $row["Title"];
 		$index = 0;
-		if($TITLE_EDITTING != $TITLE)
+		if($TITLE_EDITTING != $title)
 		for($e = 1; $e<count($titleTemp); $e++)
 		{
 		$TITLE = $titleTemp[$e];
-			if($TITLE_EDITTING == $TITLE)
+			if($TITLE_EDITTING == $title)
 			{
 				$index = $e;
 				echo "TITLE_EDITTING: " . $TITLE_EDITTING;
@@ -100,7 +100,7 @@ for($i=0; $i<count($box); $i++)
 		$price = $row["Price"];
 		$link = $row["LinkToCoverImage"];
 		$series = $row["Series"];
-		if($TITLE_EDITTING == $TITLE)
+		if($TITLE_EDITTING == $title)
 		{
 			$sql = "UPDATE videogame SET ";
 if($title != $TITLE)
@@ -158,7 +158,7 @@ else{
 // {$sql = "UPDATE videogame SET ReleaseDate='$RELEASEDATE',Series='$SERIES',Price='$PRICE',Rating='$RATING',LinkToCoverImage='$LINK' WHERE Title='$TITLE_EDITTING'";
 // echo "<br>" . $sql . "<br>";}
 //     //Return to home index PHP
-header('Location: admin.php');
+//header('Location: admin.php');
 }
 
 }
