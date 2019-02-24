@@ -22,9 +22,9 @@ VALUES ('$TITLE','$RELEASEDATE','$PRICE','$SERIES','$RATING')";
 
 if(mysqli_query($conn, $sql)){
     echo "New record added successfully.";
+    //Return to home index PHP
+header('Location: index.php');
 } else{
     echo "Error: " . $sql . "<br>" . $conn->error;}
 $conn -> close();
-//Return to home index PHP
-header('Location: index.php');
 ?>

@@ -25,6 +25,18 @@ videoGameTitle VARCHAR(50),
 Genre VARCHAR(30),
 CONSTRAINT FOREIGN KEY (videoGameTitle) REFERENCES videogame(Title)
 );
+
+CREATE TABLE region(
+videoGameTitle VARCHAR(50),
+Region VARCHAR(10),
+CONSTRAINT FOREIGN KEY (videoGameTitle) REFERENCES videogame(Title)
+);
+
+CREATE TABLE platform(
+videoGameTitle VARCHAR(50),
+Platform VARCHAR(30),
+CONSTRAINT FOREIGN KEY (videoGameTitle) REFERENCES videogame(Title)
+);
 #username (PK)
 #password not null
 #default value for privilege = 0 (standard user)

@@ -4,9 +4,11 @@ SELECT * FROM videogame;
 SELECT * FROM videogame WHERE Price = 59.99;
 #GET genre table
 SELECT * FROM genre;
+#GET genre table
+SELECT * FROM platform;
 #GET table with specific genre
 SELECT * FROM genre WHERE Genre = 'RPG';
-
+SELECT * FROM platform WHERE Platform = 'PS4';
 #DROP genre and videogame tables
 DROP TABLE genre;
 DROP TABLE videogame;
@@ -19,17 +21,28 @@ DROP TABLE videogame;
 SELECT videogame.ReleaseDate, videogame.Title, videogame.Rating, genre.Genre
 FROM genre INNER JOIN videogame 
 WHERE videogame.Title=genre.videoGameTitle AND genre.Genre = 'RPG';
-
+#
+SELECT DISTINCT videogame.*, genre.Genre, platform.Platform
+FROM videogame INNER JOIN genre INNER JOIN platform 
+WHERE videogame.Title=genre.videoGameTitle AND videogame.Title=platform.videoGameTitle AND genre.Genre = 'RPG' AND platform.Platform = 'PS4';
+#
+SELECT platform.*, genre.Genre
+FROM platform INNER JOIN genre
+WHERE genre.videoGameTitle=platform.videoGameTitle AND platform.Platform = 'Nintendo Switch';
 #DELETE videogame
 #if removing video game, must delete from genre, retailers, etc. tables before deleting from videogame table
 DELETE FROM genre WHERE videogameTitle='Persona 5'; 
 DELETE FROM videogame WHERE Title='Persona 5';
 
 #INSERT videogame info. (+genre, region, retailer, etc.)
+INSERT INTO videogame
+VALUES ('Digimon World DS', '2006-11-07', 29.99, 'Everyone 10+', 'Digimon', 'https://upload.wikimedia.org/wikipedia/en/5/54/Digimon_World_DS_Coverart.jpg');
 INSERT INTO videogame (Title,ReleaseDate,Rating,Price,Series)
 VALUES ('Persona 5', '2016-09-15', 'Mature +17',59.99,'Persona');
 INSERT INTO genre (videoGameTitle, Genre)
 VALUES ('Persona 5', 'RPG');
+INSERT INTO platform
+VALUES ('Persona 5', 'PS4');
 INSERT INTO genre (videoGameTitle, Genre)
 VALUES ('Persona 5', 'Social Simulation');
 #INSERT
@@ -41,9 +54,15 @@ INSERT INTO genre (videoGameTitle, Genre)
 VALUES ('The Liar Princess and the Blind Prince', 'Adventure');
 INSERT INTO genre (videoGameTitle, Genre)
 VALUES ('The Liar Princess and the Blind Prince', 'RPG');
+INSERT INTO platform
+VALUES ('The Liar Princess and the Blind Prince', 'Nintendo Switch'); #switch
 #INSERT
 INSERT INTO videogame (Title,ReleaseDate,Price,Series)
 VALUES ('Super Smash Bros. Ultimate', '2018-12-07',59.99, 'Super Smash Bros.');
+INSERT INTO platform
+VALUES ('Super Smash Bros. Ultimate', 'Nintendo Switch');
+INSERT INTO genre
+VALUES ('Super Smash Bros. Ultimate', 'Fighting');
 #UPDATE
 #UPDATE game cover
 UPDATE videogame

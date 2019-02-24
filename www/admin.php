@@ -38,26 +38,56 @@ if(isset($_SESSION["username"]))
 }
 ?>
 <!-- INSERT video game row -->
+<table id="addVideoGameTable" class="fit-width padding-table">
 <form id="insertVideoGameRow" action="addVideoGameEntry.php" method="post">
-	<h3> Add Video Game </h3>
-	Title: <input type="text" name="title"/> <br>
-    Release Date: <input type="date" name="date"> <br>
-    Rating: <select id="gameAgeRating" name="rating">
+        <!--  -->
+        <tr>
+ <th> Title </th>
+ <th> Release Date </th>
+ <th> Age Rating </th>
+ <th> Price </th>
+ <th> Series </th>
+ <th> Cover Art </th> 
+ <th></th>
+ </tr>
+ <td>   <input type="text" name="title"/> </td>
+ <td> <input type="date" name="date"> </td>
+ <td> <select id="gameAgeRating" name="rating">
 			<option value="NULL"> </option>			
             <option value="Everyone"> Everyone </option>
 			<option value="Everyone 10+"> Everyone 10+ </option>
 			<option value="Teen"> Teen </option>
 			<option value="Mature 17+"> Mature 17+ </option>
 			<option value="Adults Only 18+"> Adults Only 18+ </option>
-</select> <br> 
-    Price: <input type="number" name="price" step="0.01"> <br>
-	Series: <input type="text" name="series"/> <br> 
-    Cover Art: <input type="text" name="linkToCoverArt" placeholder="Link"/><br> 
-	<input type="submit" value ="Add" id="addButton"/>
-	<br> <br>
+</select> </td> 
+<td> <input type="number" name="price" step="0.01"> </td>
+<td> <input type="text" name="series"/> </td> 
+<td> <input type="text" name="linkToCoverArt" placeholder="Link"/></td> 
+<td> <input type="submit" value ="Add" id="addButton"/> </td>
 </form>
+<!--  -->
+</table>
+<!-- ADMIN add users -->
+<table class="fit-width padding-table">
+<tr>
+<th> Name </th>
+ <th> Username </th>
+ <th> Password </th>
+ <th> Standard User </th>
+  <th> Administrator </th>
+ </tr>
+<form id ="insertUserRow" action="adminFunction.php" method="post">
+<td> <input type="text" name="name" placeholder="name"/> </td>
+<td> <input type="text" name="username" placeholder="username"/> </td>
+<td> <input type="password" name="password" placeholder="password"/> </td>
+<td> <input type="radio" id="standardPrivilegeBox" name="adminCheck" value="0"/> </td>
+<td> <input type="radio" id="adminPrivilegeBox" name="adminCheck" value="1"/> </td>
+</td>
+<td> <input type="submit" value ="Add" name="adminRegisterButton"/> </td>
+</form>
+</table>
 <!-- CONNECT to VIDEOGAMEDB-->
-<table id='userTable'>
+<table class="fit-width" id='userTable'>
 <?php
  $conn = db_connect();
  //DELETE, UPDATE MANUALLY ADDED (TESTING)
@@ -112,7 +142,7 @@ while ($row = $result -> fetch_assoc())
      echo "";
 }
 ?> </table>
-<table id="videoGameTable">
+<table class="fit-width padding-table" id="videoGameTable">
 <?php
 {
  $conn = db_connect();

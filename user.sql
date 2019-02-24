@@ -2,9 +2,10 @@
 SELECT * FROM user;
 SELECT username, name, privilege FROM user WHERE username = 'vi';
 #DELETE a user with a username
-DELETE FROM user WHERE username='reyner';
+DELETE FROM user WHERE username='K';
 #INSERT into user table
 #Administrator user. Admin privilege entered.
+INSERT INTO user VALUES ('Al','morganA','restInPeace44',1);
 INSERT INTO user VALUES ('vi','vi','queen',1);
 INSERT INTO user (name,username,password,privilege)
 VALUES ('dzung','dzung','chronos',1);
@@ -23,8 +24,8 @@ SET  name = 'wan'
 WHERE username = 'vi';
 #update password where username
 UPDATE user
-SET  password = 'noir'
-WHERE username = 'dzung';
+SET  password = 'NoToaster10Ve'
+WHERE username = 'lily';
 
 #JOIN 
 #standard user wishes to view users with public personal lists?
