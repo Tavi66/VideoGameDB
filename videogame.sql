@@ -73,6 +73,9 @@ WHERE Title = 'Persona 5';
 UPDATE videogame
 SET  LinkToCoverImage = 'https://upload.wikimedia.org/wikipedia/en/f/fb/Liar_Princess_and_the_Blind_Prince_Box_Art.jpg'
 WHERE Title = 'The Liar Princess and the Blind Prince';
+UPDATE videogame
+SET  Title = '123'
+WHERE Title = 'Persona 6';
 #AGGREGATE total video game entries
 SELECT COUNT(*)
 FROM videogame;

@@ -10,29 +10,29 @@ if(isset($_POST['standardRegisterButton']))
     
     $conn = db_connect();
     //(name,username,password, privilege)
-    $sql = "INSERT INTO user
+    $sql = "INSERT INTO user (name,username,password)
     VALUES ('$name','$user','$pwd')";
-    //$result = mysqli_query($conn,$sql);
-    if(mysqli_query($conn, $sql)){
+    $result = mysqli_query($conn,$sql);
+    if($result){
         // Set session variables
         echo "User created successfully!\n";
-        echo $user . " is logged in.";
-        $sql = "SELECT username,name,privilege FROM user WHERE username = '" . $user. "';";
-        $result = $conn->query($sql);
-    
-            while ($row = $result->fetch_assoc()) {
-                $_SESSION["username"] = $row["username"];
-                $_SESSION["name"] = $row["name"];
-                $_SESSION["privilege"] = $row["privilege"];
-            }     
+        // echo $user . " is logged in.";
+        // $sql = "SELECT username,name,privilege FROM user WHERE username = '" . $user. "';";
+        // $result = $conn->query($sql);
+        header("location: index.php");
+        //     while ($row = $result->fetch_assoc()) {
+        //         $_SESSION["username"] = $row["username"];
+        //         $_SESSION["name"] = $row["name"];
+        //         $_SESSION["privilege"] = $row["privilege"];
+        //     }     
 
-        switch($_SESSION["privilege"])
-        {
-            //standard user
-            case 0: header("location: home.php");
-            break;
-            case 1: header("location: admin.php");
-        }
+        // switch($_SESSION["privilege"])
+        // {
+        //     //standard user
+        //     case 0: header("location: home.php");
+        //     break;
+        //     case 1: header("location: admin.php");
+        // }
         
     } else{
         echo "Error: " . $sql . "<br>" . $conn->error;

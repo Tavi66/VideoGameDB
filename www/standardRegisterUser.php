@@ -19,7 +19,7 @@ include_once('db-connect.php');
 <!-- BODY -->
 <!-- NAVBAR -->
 
-<!-- LOGIN form --> <!-- login to modify personal lists-->
+<!-- REGISTER form --> <!-- login to modify personal lists-->
 <form id ="centered" action="register.php" method="post">
 <input type="text" id="loginTextBox" name="name" placeholder="name"/> <br>
 <input type="text" id="loginTextBox" name="username" placeholder="username"/> <br>
