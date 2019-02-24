@@ -26,6 +26,9 @@ h1{
 .padding-table input{
     padding: 5px;
 }
+.modifyTable input,select{
+    display: table-cell;
+}
 #menu{
     width: 100%;
     table-layout: fixed;

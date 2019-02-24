@@ -39,6 +39,8 @@ INSERT INTO videogame
 VALUES ('Digimon World DS', '2006-11-07', 29.99, 'Everyone 10+', 'Digimon', 'https://upload.wikimedia.org/wikipedia/en/5/54/Digimon_World_DS_Coverart.jpg');
 INSERT INTO videogame (Title,ReleaseDate,Rating,Price,Series)
 VALUES ('Persona 5', '2016-09-15', 'Mature +17',59.99,'Persona');
+INSERT INTO videogame (Title,ReleaseDate,Rating,Price,Series)
+VALUES ('Persona 6', '2019-09-15', 'Mature +17',59.99,'Persona');
 INSERT INTO genre (videoGameTitle, Genre)
 VALUES ('Persona 5', 'RPG');
 INSERT INTO platform

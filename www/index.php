@@ -31,7 +31,8 @@ include_once('db-connect.php');
 </form>
 </div>
 <br>
-<a href="home.php" style="color:black;"> Home page </a>
+<!-- home.php = default -->
+<a href="admin.php" style="color:black;"> Home page </a>
 <!-- END OF BODY -->
 </body>
 <!-- SCRIPT -->

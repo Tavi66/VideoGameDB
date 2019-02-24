@@ -7,7 +7,7 @@ session_start();
 //if no current videogamedb or videogame table exists respectively
 //db_create();
 //table_create();
-
+$_SESSION["privilege"] = 1;
 if(empty($_SESSION["privilege"]))
 {
     echo "Access not allowed!";
@@ -39,7 +39,7 @@ if(isset($_SESSION["username"]))
 ?>
 <!-- INSERT video game row -->
 <table id="addVideoGameTable" class="fit-width padding-table">
-<form id="insertVideoGameRow" action="addVideoGameEntry.php" method="post">
+<form id="insertVideoGameRow" action="videogame.php" method="post">
         <!--  -->
         <tr>
  <th> Title </th>
@@ -63,7 +63,7 @@ if(isset($_SESSION["username"]))
 <td> <input type="number" name="price" step="0.01"> </td>
 <td> <input type="text" name="series"/> </td> 
 <td> <input type="text" name="linkToCoverArt" placeholder="Link"/></td> 
-<td> <input type="submit" value ="Add" id="addButton"/> </td>
+<td> <input type="submit" value ="Add" name="addVideoGameButton"/> </td>
 </form>
 <!--  -->
 </table>
@@ -128,12 +128,11 @@ if($result -> num_rows > 0)
 while ($row = $result -> fetch_assoc())
 {
     //display info.
-    // $userName = $row["username"];
+     $userName = $row["username"];
     echo "<tr>";
-    echo "<td></td>";
-    // echo "<td> <input class='checkBox' type= 'checkbox' name='check[]' value='" . $userName . "'> </td>";
+     echo "<td> <input class='checkBox' type= 'checkbox' name='check[]' value='" . $userName . "'> </td>";
      echo "<td>". $row["name"] ."</td>";
-     echo "<td>". $row["username"] ."</td>";
+     echo "<td>". $userName ."</td>";
      echo "<td>". $row["password"] ."</td>";
      echo "<td>". $row["privilege"] ."</td>";
      echo "</tr>";
@@ -142,7 +141,8 @@ while ($row = $result -> fetch_assoc())
      echo "";
 }
 ?> </table>
-<table class="fit-width padding-table" id="videoGameTable">
+<form action="videogame.php" method="post">
+<table class="fit-width padding-table modifyTable" id="videoGameTable">
 <?php
 {
  $conn = db_connect();
@@ -153,6 +153,7 @@ if($result->num_rows > 0) {
     echo "Video Games <br>";
     echo "
     <tr>
+    <th></th>
     <th> Cover Art </th>
     <th> Release Date </th>
     <th> Title </th>
@@ -167,13 +168,42 @@ if($result->num_rows > 0) {
         // . "Title: " . $row["Title"] . "<br>"
         // . "Price: $" . $row["Price"] . "<br>"
         // . "Series: " . $row["Series"] . "<br> <br>";
+        $title = $row["Title"];
+        $rating = $row["Rating"];
         echo "<tr>";
-        echo "<td> <img style='width: 90px; height: 120px; float:left; padding-right: 5px;' src='" . $row["LinkToCoverImage"] . "' alt='cover'> </td>";
-        echo "<td>" . $row["ReleaseDate"] . "</td>"; 
-        echo "<td>" . $row["Title"] . "</td>";
-        echo "<td>" . $row["Rating"] . "</td>";        
-        echo "<td> $" . $row["Price"] . "</td>";
-        echo "<td>" . $row["Series"] . "</td>";
+        echo "<td> <input class='checkBox' type= 'checkbox' name='check[]' value='" . $title . "'> </td>";
+        // echo "<td> <img style='width: 90px; height: 120px; float:left; padding-right: 5px;' src='" . $row["LinkToCoverImage"] . "' alt='cover'> </td>";
+        // echo "<td>" . $row["ReleaseDate"] . "<i class='material-icons'>edit</i>" "</td>"; 
+        // echo "<td>" . $title . "</td>";
+        // echo "<td>" . $row["Rating"] . "</td>";        
+        // echo "<td> $" . $row["Price"] . "</td>";
+        // echo "<td>" . $row["Series"] . "</td>";
+
+        //need to switch this to edit button for each
+        echo "<td> <input type='text' name='link[]' value='" . $row["LinkToCoverImage"] . "'> </td>";
+        echo "<td> <input type='date' name='date[]' value='" . $row["ReleaseDate"] . "'> </td>"; 
+        echo "<td> <input type='text' name='title[]' value='" . $title . "'> </td>";
+        echo "<td> <select name='rating[]'>";
+        echo"<option "; 
+        if($rating == 'NULL') echo "selected";
+        echo " value='NULL'> </option>";			
+        echo "<option ";
+        if($rating == 'Everyone') echo "selected";
+        echo " value='Everyone'> Everyone </option>";
+        echo "<option ";
+        if($rating == 'Everyone 10+') echo "selected";
+        echo " value='Everyone 10+'> Everyone 10+ </option>";
+        echo "<option ";
+        if($rating == 'Teen') echo "selected";
+        echo " value='Teen'> Teen </option>";
+        echo "<option ";
+        if($rating == 'Mature 17+') echo "selected";
+        echo " value='Mature 17+'> Mature 17+ </option>";
+        echo "<option ";
+        if($rating == 'Adults Only 18+') echo "selected";
+        echo " value='Adults Only 18+'> Adults Only 18+ </option> </select> </td>";      
+        echo "<td> <input type='number' step='0.01' name='price[]' value=" . $row["Price"] . "> </td>";
+        echo "<td> <input type='text' name='series[]' value='" . $row["Series"] . "'> </td>";
         echo "</tr>";
     }
 } else {
@@ -183,6 +213,11 @@ if($result->num_rows > 0) {
 }
 ?>
 </table>
+<input type='submit' value='Delete' name='deleteVideoGameButton' id='deleteButton'/>
+<!-- <input type='submit' value='Edit' name='editVideoGameButton' id='deleteButton'/> -->
+<input type='submit' value='Update' name='updateVideoGameButton' id='deleteButton'/>
+
+</form>
 <br>
 <!-- END OF BODY -->
 </body>
