@@ -71,11 +71,11 @@ for($i=0; $i<count($box); $i++)
 			$TITLE = $titleTemp[0];
 		$title = $row["Title"];
 		$index = 0;
-		if($TITLE_EDITTING != $title)
+		if($TITLE_EDITTING != $TITLE)
 		for($e = 1; $e<count($titleTemp); $e++)
 		{
 		$TITLE = $titleTemp[$e];
-			if($TITLE_EDITTING == $title)
+			if($TITLE_EDITTING == $TITLE)
 			{
 				$index = $e;
 				echo "TITLE_EDITTING: " . $TITLE_EDITTING;
