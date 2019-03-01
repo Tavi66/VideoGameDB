@@ -30,7 +30,7 @@ include_once('db-connect.php');
 </div>
 <br>
 <!-- Register form -->
-<form id="registerForm" action="Register.php" method="post">
+<form id="registerForm" action="register.php" method="post">
 <input type="text" name="username" placeholder="username"/> <br>
 <input type="text" name="name" placeholder="name"/> <br>
 <input type="password" name="pwd" placeholder="password"/> <br>

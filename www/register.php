@@ -2,45 +2,85 @@
 require_once('db-connect.php');
 session_start();
     //for standard user registration
-if(isset($_POST['register-submit']))
-	require 'index.php';
+if(isset($_POST['standardRegisterButton']))
 {
+	require 'db-connect.php';
+	$name = $_POST['name'];
     $username = $_POST['username'];
-    $name = $_POST['name'];
-    $password = $_POST['pwd'];
+    $password = $_POST['password'];
     
-	/*An error handler for dealing
-	  dealing with empty parameters
-	  or invalid cases
+	/*
+	Error handlers for dealing
+	dealing with empty inputs
+	or invalid cases
 	*/
+	
 	//check if the fields are empty it will take back to the page
-	if(empty($username) || empty($name)|| empty($password)){
-		header("Location:http://localhost/local%20VideoGameDB/VideoGameDB/www/index.php?error=emptyfields&username=".$username."&name=".$name);
+	if(empty($name) || empty($username)|| empty($password))
+	{
+		header("Location:http://localhost/VideoGameDB-master/www/standardRegisterUser.php?error=emptyfields&username=".$username."&name=".$name);
 		exit();
 	}
-	//filter variables that does not meet the requirements
-	else if (!filter_var(!preg_match("/^[a-zA-Z0-9]*$/",$uername)){
-		header("Location:http://localhost/local%20VideoGameDB/VideoGameDB/www/index.php?error=emptyusername=".$username."&name=".$name);
+	
+	//check if username is invalid
+/* 	else if (!filter_var(!preg_match("/^[a-zA-Z0-9]*$/",$uername))){
+		header("Location:http://localhost/local%20VideoGameDB/VideoGameDB/www/index.php?error=invalidusername=".$username."&name=".$name);
 		exit();
 	}
-	//Search pattern to check for valid username
-	else if(!preg_match("/^[a-zA-Z0-9]*$/",$uername)) {
-		header("Location:http://localhost/local%20VideoGameDB/VideoGameDB/www/index.php?error=username=".$username);
+	 */
+	//Search pattern to check for invalid username
+	else if(!preg_match("/^[a-zA-Z0-9]*$/",$uername)){
+		header("Location:http://localhost/local%20VideoGameDB/VideoGameDB/www/index.php?error=invalidusername=".$username);
 		exit();
 	}
-	//sql server check and statement to initialize
-	else {
-		$sql= "SELECT Username from users WHERE Username=?";
+	
+		//sql server check and statement to initialize
+	else{
+ 		$sql= "SELECT * FROM user WHERE name=? ,username=?, password=?";
 		$stmt= mysqli_stmt_init($conn);
-		
 		if(!mysqli_stmt_prepare($stmt,$sql)){
-		header("Location:http://localhost/local%20VideoGameDB/VideoGameDB/www/index.php?error=sqlerror");
+		header("Location:http://localhost/VideoGameDB-master/www/standardRegisterUser.php?error=sqlerror");
 		exit();
 		}
+	
+
+	//bind parameter that will grab the username and return if there is an existing username
+	else{
+			mysqli_stmt_bind_param($stmt, "s", $username);
+			mysqli_stmt_execute($stmt);
+			mysqli_stmt_store_result($stmt);
+			$resultCheck = mysqli_stmt_num_rows($stmt);
+				if($resultCheck > 0){ 
+				header("Location:http://localhost/VideoGameDB-master/www/standardRegisterUser.php?error=usertaken");
+				exit();
+				}
+		
+		 //insert the username and password being put into register_users table
+	else{	
+		$sql= "INSERT INTO user(name,username,password) VALUES (?,?,?)";
+		$stmt= mysqli_stmt_init($conn);
+				if(!mysqli_stmt_prepare($stmt,$sql)){
+				header("Location:http://localhost/VideoGameDB-master/www/standardRegisterUser.php?error=sqlerror");
+				exit();
+				}
+					
+			$hashPwd=password_hash($password, PASSWORD_DEFAULT);
+			
+			mysqli_stmt_bind_param($stmt, "ssss", $name, $username, $password, $hashPwd);
+			mysqli_stmt_execute($stmt);
+			header("Location:http://localhost/VideoGameDB-master/www/standardRegisterUser.php?register=success");
+		exit();
 	}
+	}
+	}
+}
+?>	
 	
 	
-    $conn = db_connect();
+	
+	
+<?php	
+    /* $conn = db_connect();
     //(name,username,password, privilege)
     $sql = "INSERT INTO users
     VALUES ('$name','$user','$pwd')";
@@ -70,5 +110,5 @@ if(isset($_POST['register-submit']))
         echo "Error: " . $sql . "<br>" . $conn->error;
     }
     $conn -> close();
-}
+} */
 ?>
