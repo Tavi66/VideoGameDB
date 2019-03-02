@@ -163,5 +163,62 @@ else{
 
 }
 }
+//GENRE
+if(isset($_POST['addVideoGameInfoButton']))
+{
+	$genre=$_POST['genre'];
+	$region=$_POST['region'];
+	$title=$_POST['videoGameTitle'];
+	$platform=$_POST['platform'];
+	
+	echo "Data entered. <br>";
+	if($title != "NULL")
+	{
+		echo "Title: " . $title;
+
+	 if($genre != "NULL")
+	 {
+		echo "<br> Genre: " . $genre . "<br>";
+		$sql = "INSERT INTO genre 
+		VALUES ('$title','$genre')";
+		$result = mysqli_query($conn,$sql);
+        if($result){
+	    echo  $sql . "<br>";
+	    echo "New Record added successfully to [genre]. <br>"; 
+        } else{
+	    echo "Error: " . $sql . "<br>" . $conn->error;
+		}
+	 }
+	 if($region != "NULL")
+ 	 {
+		echo "<br> Region: " . $region . "<br>";
+		$sql = "INSERT INTO region 
+		VALUES ('$title','$region')";
+		$result = mysqli_query($conn,$sql);	
+		if($result){
+			echo  $sql . "<br>";
+			echo "New Record added successfully to [region]. <br>"; 
+			} else{
+			echo "Error: " . $sql . "<br>" . $conn->error;
+			}
+
+	 }
+	 if($platform != "NULL")
+	 {
+		echo "<br> Platform: " . $platform . "<br>";
+		$sql = "INSERT INTO platform 
+		VALUES ('$title','$platform')";
+		$result = mysqli_query($conn,$sql);	
+		if($result){
+			echo  $sql . "<br>";
+			echo "New Record added successfully to [platform]. <br>"; 
+			} else{
+			echo "Error: " . $sql . "<br>" . $conn->error;
+			}
+
+	 }
+
+	}
+}
 $conn -> close();
 ?>

@@ -50,11 +50,11 @@ VALUES ('Persona 5', 'Social Simulation');
 #INSERT
 INSERT INTO videogame (Title,ReleaseDate,Price,Series)
 VALUES ('The Liar Princess and the Blind Prince', '2019-02-12',39.99, 'N/A');
-INSERT INTO genre (videoGameTitle, Genre)
+INSERT INTO genre (Title, Genre)
 VALUES ('The Liar Princess and the Blind Prince', 'Action');
-INSERT INTO genre (videoGameTitle, Genre)
+INSERT INTO genre (Title, Genre)
 VALUES ('The Liar Princess and the Blind Prince', 'Adventure');
-INSERT INTO genre (videoGameTitle, Genre)
+INSERT INTO genre (Title, Genre)
 VALUES ('The Liar Princess and the Blind Prince', 'RPG');
 INSERT INTO platform
 VALUES ('The Liar Princess and the Blind Prince', 'Nintendo Switch'); #switch

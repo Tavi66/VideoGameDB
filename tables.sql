@@ -21,21 +21,24 @@ PRIMARY KEY (Title)
 );
 #create 'genre' table
 CREATE TABLE genre(
-videoGameTitle VARCHAR(50),
+Title VARCHAR(50),
 Genre VARCHAR(30),
-CONSTRAINT FOREIGN KEY (videoGameTitle) REFERENCES videogame(Title)
+CONSTRAINT FOREIGN KEY (Title) REFERENCES videogame(Title),
+PRIMARY KEY( `Title`, `Genre`)
 );
 
 CREATE TABLE region(
-videoGameTitle VARCHAR(50),
+Title VARCHAR(50),
 Region VARCHAR(10),
-CONSTRAINT FOREIGN KEY (videoGameTitle) REFERENCES videogame(Title)
+CONSTRAINT FOREIGN KEY (Title) REFERENCES videogame(Title),
+PRIMARY KEY( `Title`, `Region`)
 );
 
 CREATE TABLE platform(
-videoGameTitle VARCHAR(50),
+Title VARCHAR(50),
 Platform VARCHAR(30),
-CONSTRAINT FOREIGN KEY (videoGameTitle) REFERENCES videogame(Title)
+CONSTRAINT FOREIGN KEY (Title) REFERENCES videogame(Title),
+PRIMARY KEY( `Title`, `Platform`)
 );
 #username (PK)
 #password not null

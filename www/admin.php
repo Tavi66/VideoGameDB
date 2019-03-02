@@ -2,6 +2,7 @@
 
 <?php
 include_once('db-connect.php');
+include_once('adminFunction.php');
 session_start();
 //uncomment db_create and table_create
 //if no current videogamedb or videogame table exists respectively
@@ -64,11 +65,81 @@ if(isset($_SESSION["username"]))
 <td> <input type="text" name="series"/> </td> 
 <td> <input type="text" name="linkToCoverArt" placeholder="Link"/></td> 
 <td> <input type="submit" value ="Add" name="addVideoGameButton"/> </td>
+</tr>
+<table>
+    Genre
+    <th> Title </th>
+    <th> Genre </th>
+    <th> Region </th>
+    <th> Platform </th>
+   <th> Retailer </th>
+<tr>
+    <td>
+        <select name='videoGameTitle'>
+            <option value='NULL'> </option>
+        <?php 
+        $conn = db_connect();
+        $sql = "SELECT * FROM videogame";
+        $result = $conn->query($sql);
+       if($result->num_rows > 0) {	
+           while ($row = $result->fetch_assoc()) {
+               $title = $row["Title"];
+               echo "<option value='$title'> $title </option>";
+           }
+       }
+        ?>
+        </select>
+</td>
+<!-- GENRE -->
+ <td> <select id="genre" name="genre">
+			<option value="NULL"> </option>			
+            <option value="Action"> Action </option>
+            <option value="Action-Adventure"> Action-Adventure </option>
+            <option value="Adventure"> Adventure </option>
+            <option value="MMO"> MMO </option>
+            <option value="Puzzle"> Puzzle </option>
+            <option value="RPG"> RPG </option>
+            <option value="Simulation"> Simulation </option>
+            <option value="Sports"> Sports </option>
+            <option value="Strategy"> Strategy </option>
+            <!-- <option value="Other"> Other </option> -->
+            
+</select> </td> 
+<!-- REGION -->
+<td> 
+<select id="Region" name="region">
+			<option value="NULL"> </option>			
+            <option value="AU"> Australasia </option>
+            <option value="EU"> Europe </option>
+            <option value="JP"> Japan </option>
+            <option value="NA"> North America </option>
+            <option value="WW"> World-Wide </option>
+            <option value="Other"> Other </option>           
+</select> </td>
+<!-- PLATFORM -->
+<td> 
+<select id="Platform" name="platform">
+			<option value="NULL"> </option>			
+            <option value="3DS"> 3DS </option>
+            <option value="Nintendo Switch"> Nintendo Switch </option>
+            <option value="PC"> PC </option>
+            <option value="PS3"> PS3 </option>
+            <option value="PS4"> PS4 </option>
+            <option value="Wii U"> Wii U </option>
+            <option value="Xbox 360"> Xbox 360 </option>
+            <option value="Xbox One"> Xbox One </option>
+            <option value="Other"> Other </option>           
+</select> 
+</td>
+<td> </td>
+<td> <input type="submit" value ="Add" name="addVideoGameInfoButton"/> </td>
+<tr>
+    </table>
 </form>
 <!--  -->
 </table>
 <!-- ADMIN add users -->
-<table class="fit-width padding-table">
+<table class="fit-width padding-table modifyTable">
 <tr>
 <th> Name </th>
  <th> Username </th>
@@ -87,6 +158,7 @@ if(isset($_SESSION["username"]))
 </form>
 </table>
 <!-- CONNECT to VIDEOGAMEDB-->
+<form action = "adminFunction.php" method="post">
 <table class="fit-width" id='userTable'>
 <?php
  $conn = db_connect();
@@ -123,24 +195,52 @@ if($result -> num_rows > 0)
  <th> Name </th>
  <th> Username </th>
  <th> Password </th>
- <th> Privilege </th>
+ <th> Standard User </th>
+ <th> Administrator </th>
  </tr>";	
+ //<th> Privilege </th>
+ $count = 0;
+ $totalStandardUser = countStandardUser();
+ $totalAdminUser = countAdminUser();
 while ($row = $result -> fetch_assoc())
 {
     //display info.
      $userName = $row["username"];
-    echo "<tr>";
+     $privilegeTemp = $row["privilege"];
+    echo "<tr class='tableRow'>";
      echo "<td> <input class='checkBox' type= 'checkbox' name='check[]' value='" . $userName . "'> </td>";
      echo "<td>". $row["name"] ."</td>";
-     echo "<td>". $userName ."</td>";
+     echo "<td> <input name='username[]' type='hidden' value='" . $userName . "'>". $userName ."</input> </td>";
      echo "<td>". $row["password"] ."</td>";
-     echo "<td>". $row["privilege"] ."</td>";
+    //  echo "<td> <select name='privilege[]'>";		
+    //  echo "<option ";
+    //  if($privilegeTemp == '0') echo "selected";
+    //  echo " value='0'> Standard User </option>";      
+    //  echo "<option ";
+    //  if($privilegeTemp == '1') echo "selected";
+    //  echo " value='1'> Administrator </option> </select> </td>";      
+
+     echo "<td> <input type='radio' id='standardPrivilegeBox' name='privilege[".$count."]' value='0'";
+     if($privilegeTemp=='0') echo "checked='checked'";
+     echo "/> </td> <td> <input type='radio' id='adminPrivilegeBox' name='privilege[".$count."]' value='1'";
+     if($privilegeTemp=='1') echo "checked='checked'";
+     echo "/> </td>";
+     echo "<td>". $privilegeTemp . " name='privilege[".$count."]' </td>";
+     
      echo "</tr>";
+    $count+=1;
 
 }     
-     echo "";
+     echo "<td></td> <td></td> <td></td> <td></td>";
+     echo "<td> Standard Users: " . $totalStandardUser . "</td> <td> Administrators: " . $totalAdminUser . " </td>";
+
 }
-?> </table>
+?> 
+</table>
+<input type="submit" value ="Delete" name="deleteUserButton" id='deleteButton'/>
+<input type='submit' value='Update' name="adminUpdateUserButton" />
+
+</form>
 <form action="videogame.php" method="post">
 <table class="fit-width padding-table modifyTable" id="videoGameTable">
 <?php
@@ -170,8 +270,8 @@ if($result->num_rows > 0) {
         // . "Series: " . $row["Series"] . "<br> <br>";
         $title = $row["Title"];
         $rating = $row["Rating"];
-        echo "<tr>";
-        echo "<td> <input class='checkBox' type= 'checkbox' name='check[]' value='" . $title . "'> </td>";
+        echo "<tr class='tableRow' id='tableRow[]' onclick='highlightRow()'>";
+        echo "<td> <input class='checkBox' type= 'checkbox' name='check[]' style='width: 50px;' value='" . $title . "'> </td>";
         // echo "<td> <img style='width: 90px; height: 120px; float:left; padding-right: 5px;' src='" . $row["LinkToCoverImage"] . "' alt='cover'> </td>";
         // echo "<td>" . $row["ReleaseDate"] . "<i class='material-icons'>edit</i>" "</td>"; 
         // echo "<td>" . $title . "</td>";
@@ -223,6 +323,34 @@ if($result->num_rows > 0) {
 </body>
 <!-- SCRIPT -->
 <script>
+function hightlightRow()
+{
+   // var checkedVal = null;
+    var boxes = document.getElementsByClassName("checkBox");
+    var rows = document.getElementsByClassName("tableRow");
+    alert("box checked!");
+    for(var i =0; i < boxes.length; ++i)
+    {
+        if(boxes[i].checked)
+        {   
+            //checkedVal = boxes[i].value;
+            rows[i].classList.add("highlight");
+            rows[i].style.backgroundaColor = gray;
+            break;
 
+        } else
+        //rows[i].style.backgroundColor = rgba(255, 255, 255, 0.75);
+        rows[i].classList.remove("highlight");
+    }
+}
+function privilegeDisplay(){
+    var privilege = document.getElementsByName("privilege");
+    for(var i =0; i < privilege.length; ++i)
+    {
+        if(privilege[i] == 1)
+        alert("privilege is 1");
+    }
+
+}
 </script>
 </html>
