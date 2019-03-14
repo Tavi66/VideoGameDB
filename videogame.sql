@@ -1,5 +1,9 @@
+#CREATE DOMAIN ... Nevermind. Hassle, since already created tables
+#DOMAINs take space in DB
+#CASCADE force drop (even with dependents on objects)
 #GET videogame table
 SELECT * FROM videogame;
+SELECT * FROM series;
 #GET table with specific attribute in videogame
 SELECT * FROM videogame WHERE Price = 59.99;
 #GET genre table
@@ -11,6 +15,10 @@ SELECT * FROM genre WHERE Genre = 'RPG';
 SELECT * FROM platform WHERE Platform = 'PS4';
 #DROP genre and videogame tables
 DROP TABLE genre;
+DROP TABLE region;
+DROP TABLE platform;
+DROP TABLE series;
+DROP TABLE company;
 DROP TABLE videogame;
 #PROJECTION
 #DIVISION 
@@ -28,12 +36,16 @@ WHERE videogame.Title=genre.videoGameTitle AND videogame.Title=platform.videoGam
 #
 SELECT platform.*, genre.Genre
 FROM platform INNER JOIN genre
-WHERE genre.videoGameTitle=platform.videoGameTitle AND platform.Platform = 'Nintendo Switch';
+WHERE genre.Title=platform.Title AND platform.Platform = 'Nintendo Switch';
+#Get title, platform, genre, and region
+SELECT platform.*, genre.Genre, region.Region
+FROM platform INNER JOIN genre INNER JOIN region
+WHERE genre.Title=platform.Title AND platform.Title = region.Title;
 #DELETE videogame
 #if removing video game, must delete from genre, retailers, etc. tables before deleting from videogame table
 DELETE FROM genre WHERE videogameTitle='Persona 5'; 
 DELETE FROM videogame WHERE Title='Persona 5';
-
+DELETE FROM videogame WHERE Series='Super Smash Bros.';
 #INSERT videogame info. (+genre, region, retailer, etc.)
 INSERT INTO videogame
 VALUES ('Digimon World DS', '2006-11-07', 29.99, 'Everyone 10+', 'Digimon', 'https://upload.wikimedia.org/wikipedia/en/5/54/Digimon_World_DS_Coverart.jpg');
@@ -45,6 +57,7 @@ INSERT INTO genre (videoGameTitle, Genre)
 VALUES ('Persona 5', 'RPG');
 INSERT INTO platform
 VALUES ('Persona 5', 'PS4');
+INSERT INTO region VALUES ('Persona 5','WW');
 INSERT INTO genre (videoGameTitle, Genre)
 VALUES ('Persona 5', 'Social Simulation');
 #INSERT
