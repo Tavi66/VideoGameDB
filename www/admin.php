@@ -225,7 +225,7 @@ while ($row = $result -> fetch_assoc())
      echo "/> </td> <td> <input type='radio' id='adminPrivilegeBox' name='privilege[".$count."]' value='1'";
      if($privilegeTemp=='1') echo "checked='checked'";
      echo "/> </td>";
-     echo "<td>". $privilegeTemp . " name='privilege[".$count."]' </td>";
+     //echo "<td>". $privilegeTemp . " name='privilege[".$count."]' </td>";
      
      echo "</tr>";
     $count+=1;

@@ -48,66 +48,49 @@ if(isset($_POST['adminUpdateUserButton']))
 {
     $box = $_POST['check'];
     $boxP = $_POST['privilege'];
-    foreach($box as $box_num => $box_val)
+    $count = 0;
+    echo "Count of privileges: " . count($boxP) . "<br>";
     for($i=0; $i<count($box); $i++)
     {
         $username_EDITTING =$box[$i];
-        $sql = "SELECT * FROM user WHERE username='$username_EDITTING'";
+        $sql = "SELECT * FROM user";
         $result = mysqli_query($conn,$sql);
         while ($row = $result->fetch_assoc())
         {
-            $privilege_EDITTING =$row['privilege'];
-                foreach($boxP as $option_num => $option_val)
-                {
-                    $username = $box_val;
-                    echo $option_num." ".$option_val."<br>";
-                    //if checkbox is clicked, the privilege for
-                    //selected user will be switched.
-                    //standard user will gain admin privileges
-                    //admin user loses admin privileges
-                    if($username_EDITTING == $username)
-                    $privilege =$option_val;
-
-            if((isset($box[$box_num]) && $privilege_EDITTING != $privilege))
+            
+            echo "<br> Beginning of loop \$count: " . $count . "<br>";
+            $username = $row["username"];
+            echo "<br> Username Editting: " . $username_EDITTING;
+            echo "<br> Username: " . $username;
+            if($username_EDITTING == $username)
             {
-                    //$privilege = $option_val;
-            echo "<br> Privilege in DB: " . $privilege_EDITTING;
-            echo "<br> Privilege selected: " . $privilege;
-             echo "<br> privileges don't match. Updating...";
-             $sql = "UPDATE user SET privilege=";
-             $sql .= $privilege; 
-             $sql .= " WHERE username='$username_EDITTING'";
-             $result1 = mysqli_query($conn,$sql);
-             if($result1)
+                echo "<br> Privilege (in DB): " . $row["privilege"];
+                echo "<br> Privilege selected: " . $boxP[$count] . "<br>";    
+                if($row["privilege"] != $boxP[$count])
+                {
+                    $sql = "UPDATE user SET privilege = $boxP[$count] WHERE username='$username_EDITTING'";
+                    echo $sql . "<br>";
+                    $count = 0;
+                    $result = mysqli_query($conn,$sql);
+                    if($result)
              {
                  echo "Record(s) updated successfully. <br>";
                  header('Location: admin.php');
              }else{
                  echo "Error: " . $sql . "<br>" . $conn->error;
-                 header('Location: localhost/admin.php?error=noCheckedEntries');
+                 //header('Location: localhost/admin.php?error=noCheckedEntries');
 
-             }            //    echo "<br> A MATCH. Exit loop...<br>";
-				//break;
-            } 
-            else
-			{			
-				echo "<br> NOT A MATCH. Continue loop...<br>";
-			}
-        }
-        // if($privilege_EDITTING != $privilege)
-        // {
-        //     echo "<br> Privilege in DB: " . $privilege_EDITTING;
-        //     echo "<br> Privilege selected: " . $privilege;
-        //     //if($privilege_EDITTING==1) $privilege = 0;
-        //     //else if($privilege_EDITTING==0) $privilege = 1;
-
-        // } else {
-        //     echo "<br> Privilege in DB: " . $privilege_EDITTING;
-        //     echo "<br> Privilege selected: " . $privilege;
-        //     echo "<br> privileges match. Continuing...";
-         }               
-     }
-
+             }  
+                }
+                break; 
+            } else {
+                if($count < count($boxP))
+                $count++;
+                else $count = 0;
+            }
+            echo "<br> End of loop \$count: " . $count . "<br>";
+    }
+    }
 }
 $conn -> close();
 
