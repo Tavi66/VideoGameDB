@@ -20,6 +20,15 @@ LinkToCoverImage VARCHAR(256) DEFAULT 'blankCover.png',
 CONSTRAINT FOREIGN KEY (Series) REFERENCES series(Series),
 PRIMARY KEY (Title)
 );
+#videogame-series table
+#Don't think need this for now
+CREATE TABLE videogame_series(
+Series VARCHAR(50),
+Title VARCHAR(50),
+CONSTRAINT FOREIGN KEY (Title) REFERENCES videogame(Title),
+CONSTRAINT FOREIGN KEY (Series) REFERENCES series(Series),
+PRIMARY KEY(Title, Series)
+);
 #create 'series' table
 CREATE TABLE series(
 Series VARCHAR(50),
@@ -32,18 +41,17 @@ PRIMARY KEY(Series)
 CREATE TABLE series_company(
 Series VARCHAR(50), #FK
 Company VARCHAR(30), #FK
-Type VARCHAR(30), #publisher, developer, publisher and developer
+CompanyType VARCHAR(30), #publisher, developer, publisher and developer
 CONSTRAINT FOREIGN KEY (Series) REFERENCES series(Series),
-CONSTRAINT FOREIGN KEY (Company) REFERENCES company(Company),
-CONSTRAINT FOREIGN KEY (Type) REFERENCES company(Type),
+FOREIGN KEY (Company, CompanyType) REFERENCES company(Company, CompanyType), 
 PRIMARY KEY (Series, Company)
  );
 #create 'company' table
 CREATE TABLE company(
 Company VARCHAR(30),
 LinkToWebsite VARCHAR(256),
-Type VARCHAR(30), #publisher, developer, publisher and developer
-PRIMARY KEY(Company)
+CompanyType VARCHAR(30), #publisher, developer, publisher and developer
+PRIMARY KEY(Company, CompanyType)
 );
 
 #create 'retailer' table
@@ -79,6 +87,7 @@ CREATE TABLE reviews(
 Title VARCHAR(50),
 Rating INT, # Overall rating: 1- 10?
 Review VARCHAR(256),
+Date DATE,
 UserRatedBy VARCHAR(20),
 CONSTRAINT FOREIGN KEY (UserRatedBy) REFERENCES user(username),
 CONSTRAINT FOREIGN KEY (Title) REFERENCES videogame(Title),
