@@ -6,7 +6,8 @@ CREATE TABLE user (
 name VARCHAR(20) NOT NULL,
 username VARCHAR(20),
 password VARCHAR(30) NOT NULL,
-privilege INT default 0,
+privilege BIT NOT NULL DEFAULT 0,
+#privilege INT default 0,
 PRIMARY KEY (username)
 );
 #create 'videogame' table

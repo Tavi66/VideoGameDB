@@ -42,6 +42,8 @@ DROP TABLE `videogamedb`.`favorites`;
 DROP TABLE `videogamedb`.`videogame`;
 DROP TABLE `videogamedb`.`reviews`;
 DROP TABLE videogame;
+DROP TABLE user;
+SELECT * FROM user;
 SELECT series.*, company.*
 FROM series_company INNER JOIN series INNER JOIN company 
 WHERE series.Series=series_company.Series AND company.Company=series_company.Company;
