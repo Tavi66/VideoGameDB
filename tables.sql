@@ -43,9 +43,9 @@ PRIMARY KEY(Series)
 CREATE TABLE series_company(
 Series VARCHAR(50), #FK
 Company VARCHAR(30), #FK
-CompanyType VARCHAR(30), #publisher, developer, publisher and developer
+#CompanyType VARCHAR(30), #publisher, developer, publisher and developer
 CONSTRAINT FOREIGN KEY (Series) REFERENCES series(Series),
-FOREIGN KEY (Company, CompanyType) REFERENCES company(Company, CompanyType), 
+FOREIGN KEY (Company) REFERENCES company(Company), 
 PRIMARY KEY (Series, Company)
  );
 #create 'company' table
@@ -55,7 +55,14 @@ LinkToWebsite VARCHAR(256),
 CompanyType VARCHAR(30), #publisher, developer, publisher and developer
 PRIMARY KEY(Company, CompanyType)
 );
-
+CREATE TABLE videogame_retailer(
+Title VARCHAR(50), #FK
+Retailer VARCHAR(30), #FK
+FOREIGN KEY (Title) REFERENCES videogame(Title),
+FOREIGN KEY (Retailer) REFERENCES retailer(Retailer),
+PRIMARY KEY (Title, Retailer)
+ );
+ DROP TABLE videogame_retailer;
 #create 'retailer' table
 CREATE TABLE retailer(
 Retailer VARCHAR(30),
@@ -97,22 +104,21 @@ PRIMARY KEY(Title, UserRatedBy)
 );
 #personal lists
 #private, hide record if marked private
-CREATE TABLE favorites(
+CREATE TABLE personalList(
 Title VARCHAR(50),
 Private BOOL,
 UserRatedBy VARCHAR(20),
+ListName VARCHAR(50),
 CONSTRAINT FOREIGN KEY (UserRatedBy) REFERENCES user(username),
 CONSTRAINT FOREIGN KEY (Title) REFERENCES videogame(Title),
-PRIMARY KEY(Title, UserRatedBy)
+PRIMARY KEY(Title, UserRatedBy, ListName)
 );
-CREATE TABLE played(
-Title VARCHAR(50),
-Private BOOL,
-UserRatedBy VARCHAR(20),
-CONSTRAINT FOREIGN KEY (UserRatedBy) REFERENCES user(username),
-CONSTRAINT FOREIGN KEY (Title) REFERENCES videogame(Title),
-PRIMARY KEY(Title, UserRatedBy)
-);
+INSERT INTO personalList 
+VALUES ('Persona 5', FALSE, 'lily', 'Favorites');
+INSERT INTO personalList 
+VALUES ('Super Smash Bros. Ultimate', FALSE, 'vi', 'Played');
+
+SELECT * FROM personalList;
 #username (PK)
 #password not null
 #default value for privilege = 0 (standard user)

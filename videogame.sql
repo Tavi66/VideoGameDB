@@ -4,10 +4,44 @@
 #GET videogame table
 SELECT COUNT(*) AS TLPatBP_Genres
 FROM genre WHERE Title= 'The Liar Princess and the Blind Prince';
+INSERT INTO genre VALUES ('Disgaea 1 Complete','RPG');
 UPDATE videogame
 SET Price = 79.99, Rating = 'Mature 17+', LinkToCoverImage = 'blankCover.png'
 WHERE Title = 'Persona 5';
+INSERT INTO region 
+VALUES ('Disgaea 1 Complete','WW');
+##############################################
+#SELECTS
+SELECT * FROM retailer;
+SELECT * FROM genre;
+SELECT * FROM region;
 SELECT * FROM videogame;
+SELECT * FROM platform;
+#############################################
+SELECT COUNT(*) AS Total_retailers
+FROM retailer;
+UPDATE retailer
+SET LinkToWebsite = 'https://www.amazon.com/'
+WHERE Retailer = 'Amazon';
+SELECT COUNT(*) AS Total_Titles_Switch
+FROM platform
+WHERE Platform = 'Nintendo Switch';
+DELETE FROM platform
+WHERE Title = 'The Liar Princess and the Blind Prince' AND Platform =  'PS4';
+UPDATE platform
+SET Platform = 'PS4'
+WHERE Title = 'The Liar Princess and the Blind Prince' AND Platform =  'Nintendo Switch';
+
+INSERT INTO platform
+VALUES ('Disgaea 1 Complete','Nintendo Switch');
+SELECT COUNT(*) AS Total_Titles_Regions
+FROM region;
+DELETE FROM region
+WHERE Title = 'The Liar Princess and the Blind Prince' AND Region =  'NA';
+UPDATE region
+SET Region = 'WW'
+WHERE Title = 'The Liar Princess and the Blind Prince' AND Region =  'JP';
+
 DELETE FROM videogame
 WHERE Title = 'Super Smash Bros. Ultimate';
 SELECT * FROM series;
@@ -20,8 +54,7 @@ SELECT * FROM videogame WHERE Price = 59.99;
 UPDATE genre
 SET genre = 'Action-Adventure'
 WHERE Title = 'The Liar Princess and the Blind Prince' AND Genre = 'Action';
-#GET genre table
-SELECT * FROM genre;
+#
 SELECT videogame.Title, genre.Genre, platform.Platform FROM videogame
 INNER JOIN genre INNER JOIN platform 
 where genre.Title = videogame.Title AND platform.Title = videogame.Title;

@@ -38,8 +38,48 @@ if(isset($_SESSION["username"]))
     ";
 }
 ?>
+<form action ="test.php" method="post">
+<select name="videoGameTitle">
+            <option value="NULL"> </option>
+        <?php 
+        $conn = db_connect();
+        $sql = "SELECT * FROM videogame";
+        $result = mysqli_query($conn,$sql);
+        if($result->num_rows > 0) {	
+           while ($row = $result->fetch_assoc()) {
+               $title = $row["Title"];
+               echo "<option value='$title'> $title </option>";
+           }
+       }
+        ?>
+        </select>
+
+<select name= "username">
+Username: <option value="NULL"> </option>
+<?php
+        $conn = db_connect();
+        $sql = "SELECT * FROM user";
+        $result = mysqli_query($conn,$sql);
+        if($result->num_rows > 0) {	
+           while ($row = $result->fetch_assoc()) {
+               $username = $row["username"];
+               echo "<option value='$username'> $username </option>";
+           }
+       }
+?>
+</select>
+<input type="date" name="dateReviewed">
+<select name="rating">
+<?php
+for ($i = 0; $i < 11; $i++)
+echo "<option value='$i'> $i </option>";
+?>
+</select>
+<textarea rows="4" cols="50" name="review"> </textarea>
+<input type="submit" value ="Add" name="TESTaddReviewButton"/> 
+</form>
 <!-- CONNECT to VIDEOGAMEDB-->
-<table id="videoGameTable">
+<table  class="fit-width padding-table" id="videoGameTable">
 <?php
 {
  $conn = db_connect();

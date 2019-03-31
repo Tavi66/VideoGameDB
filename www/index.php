@@ -6,7 +6,7 @@ include_once('db-connect.php');
 //if no current videogamedb or videogame table exists respectively
 //db_create();
 //UPDATE: platform, region, and genre created (with primary key)
-//table_create();
+table_create();
 ?>
 
 <html>
