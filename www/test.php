@@ -22,8 +22,7 @@ if(isset($_POST['TESTaddReviewButton']))
     $sql = "INSERT INTO reviews VALUES ('$title','$rating','$review','$dateCreated','$user')";
     if(mysqli_query($conn, $sql)){
         echo "New record added successfully.";
-        //Return to home index PHP
-    header('Location: admin.php');
+        echo "<br>".$sql."<br>";
     } else{
         echo "Error: " . $sql . "<br>" . $conn->error;}
 }
