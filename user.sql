@@ -25,11 +25,20 @@ WHERE username = 'vi';
 UPDATE user
 SET  password = 'noir'
 WHERE username = 'dzung';
-
+#update privilege where username (to admin)
+UPDATE user
+SET  privilege = 1
+WHERE username = 'lily';
+#update privilege where username (to standard)
+UPDATE user
+SET  privilege = 0
+WHERE username = 'morganA';
 #JOIN 
 #standard user wishes to view users with public personal lists?
 #
 
 #AGGREGATE (how many users w/ privilege ...) #privilege = 0 standard user #privilege = 1 admin
-SELECT COUNT(*)
+SELECT COUNT(privilege) AS Total_Standard_Users
 FROM user WHERE user.privilege = 0;
+SELECT COUNT(privilege) AS Total_Administrators
+FROM user WHERE user.privilege = 1;
