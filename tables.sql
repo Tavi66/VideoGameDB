@@ -20,15 +20,17 @@ LinkToCoverImage VARCHAR(256) DEFAULT 'blankCover.png',
 CONSTRAINT FOREIGN KEY (Series) REFERENCES series(Series),
 PRIMARY KEY (Title)
 );
+#
 #videogame-series table
 #Don't think need this for now
-CREATE TABLE videogame_series(
-Series VARCHAR(50),
-Title VARCHAR(50),
-CONSTRAINT FOREIGN KEY (Title) REFERENCES videogame(Title),
-CONSTRAINT FOREIGN KEY (Series) REFERENCES series(Series),
-PRIMARY KEY(Title, Series)
-);
+#CREATE TABLE videogame_series(
+#Series VARCHAR(50),
+#Title VARCHAR(50),
+#CONSTRAINT FOREIGN KEY (Title) REFERENCES videogame(Title),
+#CONSTRAINT FOREIGN KEY (Series) REFERENCES series(Series),
+#PRIMARY KEY(Title, Series)
+#);
+#
 #create 'series' table
 CREATE TABLE series(
 Series VARCHAR(50),

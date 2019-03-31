@@ -22,7 +22,6 @@ INSERT INTO videogame (Title, ReleaseDate, Price, Rating, Series, LinkToCoverIma
 #('Persona 5', '2016-09-15', 59.99, 'Mature 17+', 'https://upload.wikimedia.org/wikipedia/en/b/b0/Persona_5_cover_art.jpg'),
 #('Persona Q2', '2019-06-04', 69.99, 'Mature 17+', 'https://upload.wikimedia.org/wikipedia/en/7/71/PersonaQ2newcinemalabyrinth.jpg'),('Super Smash Bros. Ultimate', '2018-12-07', 59.99, 'Everyone 10+', 'https://upload.wikimedia.org/wikipedia/en/5/50/Super_Smash_Bros._Ultimate.jpg'),
 #('The Liar Princess and the Blind Prince', '2019-02-12', 39.99, 'Everyone 10+', 'https://upload.wikimedia.org/wikipedia/en/f/fb/Liar_Princess_and_the_Blind_Prince_Box_Art.jpg');
-
 #
 SELECT * FROM series;
 INSERT INTO series (Series) VALUES ('N/A');
@@ -36,6 +35,11 @@ WHERE series = 'Persona';
 INSERT INTO company VALUES ('Square Enix','https://www.square-enix.com/','Publisher and Developer');
 INSERT INTO company VALUES ('Atlus','https://www.atlus.com/','Publisher and Developer');
 
+SELECT COUNT(*) AS seriesTotal
+FROM series;
+SELECT videogame.Title, series.*
+FROM videogame INNER JOIN series
+WHERE videogame.Series = 'Disgaea' AND videogame.Series = series.Series;
 #TABLE DROPs
 DROP TABLE `videogamedb`.`played`;
 DROP TABLE `videogamedb`.`favorites`;
@@ -43,7 +47,14 @@ DROP TABLE `videogamedb`.`videogame`;
 DROP TABLE `videogamedb`.`reviews`;
 DROP TABLE videogame;
 DROP TABLE user;
-SELECT * FROM user;
+#DROP genre and videogame tables
+DROP TABLE genre;
+DROP TABLE region;
+DROP TABLE platform;
+DROP TABLE series;
+DROP TABLE company;
+DROP TABLE videogame;
+
 SELECT series.*, company.*
 FROM series_company INNER JOIN series INNER JOIN company 
 WHERE series.Series=series_company.Series AND company.Company=series_company.Company;
