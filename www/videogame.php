@@ -231,7 +231,7 @@ if(isset($_POST['addVideoGameInfoButton']))
 	 {
 		echo "<br> Platform: " . $platform . "<br>";
 		$sql = "INSERT INTO platform 
-		VALUES ('$title','$platform')";
+		VALUES (\"$title\",'$platform')";
 		$result = mysqli_query($conn,$sql);	
 		if($result){
 			echo  $sql . "<br>";
