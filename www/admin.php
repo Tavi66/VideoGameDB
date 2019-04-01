@@ -8,6 +8,7 @@ session_start();
 //if no current videogamedb or videogame table exists respectively
 //db_create();
 //table_create();
+//populateDB();
 $_SESSION["privilege"] = 1;
 if(empty($_SESSION["privilege"]))
 {
@@ -38,10 +39,25 @@ if(isset($_SESSION["username"]))
     ";
 }
 ?>
-<!-- INSERT video game row -->
+<!-- INSERT video game/series/ video game Info -->
 <table id="addVideoGameTable" class="fit-width padding-table">
 <form id="insertVideoGameRow" action="videogame.php" method="post">
         <!--  -->
+<tr>
+<th> Series </th>
+<th> Date Created </th>
+<th> Status </th>
+</tr>
+<tr>
+ <td>   <input type="text" name="Series"/> </td>
+ <td> <input type="date" name="dateCreated"> </td>
+ <td> <select name="status">
+			<option value="Ongoing"> Ongoing </option>			
+            <option value="Complete"> Complete </option>
+			<option value="TBD"> TBD </option>
+</select> </td> 
+<td> <input type="submit" value ="Add" name="addSeriesButton"/> </td>
+</tr>
         <tr>
  <th> Title </th>
  <th> Release Date </th>
@@ -62,7 +78,25 @@ if(isset($_SESSION["username"]))
 			<option value="Adults Only 18+"> Adults Only 18+ </option>
 </select> </td> 
 <td> <input type="number" name="price" step="0.01"> </td>
-<td> <input type="text" name="series"/> </td> 
+<td> 
+<!-- <input type="text" name="series"/>  -->
+<select name= "series">
+            <option value="N/A"> N/A </option>
+<?php 
+        $conn = db_connect();
+        $sql = "SELECT * FROM series";
+        $result = mysqli_query($conn,$sql);
+        if($result->num_rows > 0) {	
+           while ($row = $result->fetch_assoc()) {
+               $series = $row["Series"];
+               if($series != "N/A")
+               echo "<option value='$series'> $series </option>";
+           }
+       }
+        ?>
+        </select>
+
+</td> 
 <td> <input type="text" name="linkToCoverArt" placeholder="Link"/></td> 
 <td> <input type="submit" value ="Add" name="addVideoGameButton"/> </td>
 </tr>
@@ -75,16 +109,16 @@ if(isset($_SESSION["username"]))
    <th> Retailer </th>
 <tr>
     <td>
-        <select name='videoGameTitle'>
-            <option value='NULL'> </option>
+        <select name="videoGameTitle">
+            <option value="NULL"> </option>
         <?php 
         $conn = db_connect();
         $sql = "SELECT * FROM videogame";
-        $result = $conn->query($sql);
-       if($result->num_rows > 0) {	
+        $result = mysqli_query($conn,$sql);
+        if($result->num_rows > 0) {	
            while ($row = $result->fetch_assoc()) {
                $title = $row["Title"];
-               echo "<option value='$title'> $title </option>";
+               echo "<option value=\"$title\"> $title </option>";
            }
        }
         ?>
@@ -162,30 +196,9 @@ if(isset($_SESSION["username"]))
 <table class="fit-width" id='userTable'>
 <?php
  $conn = db_connect();
- //DELETE, UPDATE MANUALLY ADDED (TESTING)
-
- //$sql = "DELETE FROM videogame WHERE Title='Digimon World DS'";
-
- //  $sql = "UPDATE videogame
-// SET  LinkToCoverImage = 'https://upload.wikimedia.org/wikipedia/en/f/fb/Liar_Princess_and_the_Blind_Prince_Box_Art.jpg'
-// WHERE Title = 'The Liar Princess and the Blind Prince'";
-//  $sql = "UPDATE videogame
-//  SET  LinkToCoverImage = 'https://upload.wikimedia.org/wikipedia/en/b/b0/Persona_5_cover_art.jpg'
-//  WHERE Title = 'Persona 5'";
-// $sql = "INSERT INTO user (name,username,password, privilege)
-// VALUES ('AAA','reyner','Beta', 0)";
-//  $result = $conn->query($sql);
-// $sql = "DELETE FROM user WHERE username='user'";
-// $result = mysqli_query($conn,$sql);
-//  if($result) {
-//      //echo "New entry created successfully!<br>";
-//  } else {
-//      echo "Error: " . $sql . "<br>" . $conn->error;
-//  }
-//SELECT
-///////////////////////////////////////
 $sql = "SELECT * FROM user";
 $result = mysqli_query($conn,$sql);
+
 if($result -> num_rows > 0)
 {
  echo "Users <br>";
@@ -210,23 +223,14 @@ while ($row = $result -> fetch_assoc())
     echo "<tr class='tableRow'>";
      echo "<td> <input class='checkBox' type= 'checkbox' name='check[]' value='" . $userName . "'> </td>";
      echo "<td>". $row["name"] ."</td>";
-     echo "<td> <input name='username[]' type='hidden' value='" . $userName . "'>". $userName ."</input> </td>";
-     echo "<td>". $row["password"] ."</td>";
-    //  echo "<td> <select name='privilege[]'>";		
-    //  echo "<option ";
-    //  if($privilegeTemp == '0') echo "selected";
-    //  echo " value='0'> Standard User </option>";      
-    //  echo "<option ";
-    //  if($privilegeTemp == '1') echo "selected";
-    //  echo " value='1'> Administrator </option> </select> </td>";      
+     echo "<td>". $userName ." </td>";
+     echo "<td> <input name='password[]' type='password' value='" . $row["password"] . "'> </td>";
 
      echo "<td> <input type='radio' id='standardPrivilegeBox' name='privilege[".$count."]' value='0'";
      if($privilegeTemp=='0') echo "checked='checked'";
      echo "/> </td> <td> <input type='radio' id='adminPrivilegeBox' name='privilege[".$count."]' value='1'";
      if($privilegeTemp=='1') echo "checked='checked'";
-     echo "/> </td>";
-     //echo "<td>". $privilegeTemp . " name='privilege[".$count."]' </td>";
-     
+     echo "/> </td>";     
      echo "</tr>";
     $count+=1;
 
@@ -239,7 +243,7 @@ while ($row = $result -> fetch_assoc())
 </table>
 <input type="submit" value ="Delete" name="deleteUserButton" id='deleteButton'/>
 <input type='submit' value='Update' name="adminUpdateUserButton" />
-
+<!-- VIDEO GAME TABLE UPDATE-DELETE -->
 </form>
 <form action="videogame.php" method="post">
 <table class="fit-width padding-table modifyTable" id="videoGameTable">
@@ -270,8 +274,9 @@ if($result->num_rows > 0) {
         // . "Series: " . $row["Series"] . "<br> <br>";
         $title = $row["Title"];
         $rating = $row["Rating"];
+        $series = $row["Series"];
         echo "<tr class='tableRow' id='tableRow[]' onclick='highlightRow()'>";
-        echo "<td> <input class='checkBox' type= 'checkbox' name='check[]' style='width: 50px;' value='" . $title . "'> </td>";
+        echo "<td> <input class='checkBox' type= 'checkbox' name='check[]' style='width: 50px;' value=\"" . $title . "\"> </td>";
         // echo "<td> <img style='width: 90px; height: 120px; float:left; padding-right: 5px;' src='" . $row["LinkToCoverImage"] . "' alt='cover'> </td>";
         // echo "<td>" . $row["ReleaseDate"] . "<i class='material-icons'>edit</i>" "</td>"; 
         // echo "<td>" . $title . "</td>";
@@ -279,10 +284,10 @@ if($result->num_rows > 0) {
         // echo "<td> $" . $row["Price"] . "</td>";
         // echo "<td>" . $row["Series"] . "</td>";
 
-        //need to switch this to edit button for each
+        //need to switch this to edit button for each?
         echo "<td> <input type='text' name='link[]' value='" . $row["LinkToCoverImage"] . "'> </td>";
         echo "<td> <input type='date' name='date[]' value='" . $row["ReleaseDate"] . "'> </td>"; 
-        echo "<td> <input type='text' name='title[]' value='" . $title . "'> </td>";
+        echo "<td> <input type='text' name='title[]' value=\"" . $title . "\"> </td>";
         echo "<td> <select name='rating[]'>";
         echo"<option "; 
         if($rating == 'NULL') echo "selected";
@@ -303,7 +308,23 @@ if($result->num_rows > 0) {
         if($rating == 'Adults Only 18+') echo "selected";
         echo " value='Adults Only 18+'> Adults Only 18+ </option> </select> </td>";      
         echo "<td> <input type='number' step='0.01' name='price[]' value=" . $row["Price"] . "> </td>";
-        echo "<td> <input type='text' name='series[]' value='" . $row["Series"] . "'> </td>";
+        echo "<td>";
+
+        $sqlS = "SELECT * FROM series";
+        $resultS = mysqli_query($conn,$sqlS);
+        if($resultS->num_rows > 0) {	
+            echo "<select name = 'series[]'>";
+           while ($rowS = $resultS->fetch_assoc()) {
+               $seriesA = $rowS["Series"];
+               if($series == $seriesA)
+               echo "<option value='$seriesA' selected> $seriesA </option>";
+               else
+               echo "<option value='$seriesA'> $seriesA </option>";
+           }
+       }
+       echo "</td>";
+
+        //echo "<td> <input type='text' name='series[]' value='" . $row["Series"] . "'> </td>";
         echo "</tr>";
     }
 } else {
@@ -316,7 +337,90 @@ if($result->num_rows > 0) {
 <input type='submit' value='Delete' name='deleteVideoGameButton' id='deleteButton'/>
 <!-- <input type='submit' value='Edit' name='editVideoGameButton' id='deleteButton'/> -->
 <input type='submit' value='Update' name='updateVideoGameButton' id='deleteButton'/>
+</form>
+<br>
+<!-- PLATFORM-GENRE-REGION TABLE DISPLAY-UPDATE-DELETE -->
+<form  action="videogame.php" method="post">
+<table class="fit-width padding-table modifyTable" id="videoGameTable">
+<?php
+{
+ $conn = db_connect();
+ $sql = "SELECT * FROM genre";
+//Split into videogame-genre, videogame-platform, etc. views?
+// $sql = "SELECT videogame.Title, genre.Genre, platform.Platform, region.Region FROM videogame
+// INNER JOIN genre INNER JOIN platform INNER JOIN region 
+// where genre.Title = videogame.Title AND platform.Title = videogame.Title AND region.Title = videogame.Title"; 
+$result = $conn->query($sql);
+if($result->num_rows > 0) {
+    //display data per row
+    echo "Genre <br>";
+    echo "
+    <tr>
+    <th></th>
+    <th> Title </th>
+    <th> Genre </th>
+    </tr>";	
+    
+    //<th> Region </th>
+    //<th> Platform </th>
+    $count = 0;
+    while ($row = $result->fetch_assoc()) {
+        if($count ==0)
+        //display cover art if any, else display blank cover
+        // echo "<img style='width: 90px; height: 120px; float:left; padding-right: 5px;' src='" . $row["LinkToCoverImage"] . "' alt='cover'> <br>";
+        // echo "Release Date: " . $row["ReleaseDate"] . "<br>" 
+        // . "Title: " . $row["Title"] . "<br>"
+        // . "Price: $" . $row["Price"] . "<br>"
+        // . "Series: " . $row["Series"] . "<br> <br>";
+        $title = $row["Title"];
+        $genre = $row["Genre"];
+        //$region = $row["Region"];        
+        //$platform = $row["Platform"];        
+        echo "<tr class='tableRow' id='tableRow[]' onclick='highlightRow()'>";
+        echo "<td> <input class='checkBox' type= 'checkbox' name='check[]' style='width: 50px;' value=\"" . $title . "\"> </td>";
+        // echo "<td> <img style='width: 90px; height: 120px; float:left; padding-right: 5px;' src='" . $row["LinkToCoverImage"] . "' alt='cover'> </td>";
+        // echo "<td>" . $row["ReleaseDate"] . "<i class='material-icons'>edit</i>" "</td>"; 
+        // echo "<td>" . $title . "</td>";
+        // echo "<td>" . $row["Rating"] . "</td>";        
+        // echo "<td> $" . $row["Price"] . "</td>";
+        // echo "<td>" . $row["Series"] . "</td>";
 
+        //need to switch this to edit button for each
+//        if($lastTitle != $title)
+        echo "<td>" . $title . "</td>";
+        echo "<td> " ;
+        // $sqlG = "SELECT DISTINCT genre.Title FROM genre WHERE Title=$title";
+        // $resultG = $conn->query($sqlG);
+        // 
+        // while ($rowG = $resultG->fetch_assoc()) 
+        // {
+        //     $genre =  $rowG["Genre"];
+        // }
+
+            echo "<input type='text' name='genre[]' value='" . $genre . "'> <br> ";
+        echo "</td>";
+        //echo "<td>" . $region . "</td>";
+        //echo "<td> <input type='text' name='genre[]' value='" . $platform . "'> </td>";
+       //echo "<td> <input type='text' name='link[]' value='" . $row["LinkToCoverImage"] . "'> </td>";
+       // echo "<td> <input type='date' name='date[]' value='" . $row["ReleaseDate"] . "'> </td>"; 
+        echo "</tr>";
+    }
+} else {
+    echo "0 results";
+}     $conn -> close();
+
+}
+?>
+</table>
+
+</form>
+<br>
+<!-- SERIES TABLE UPDATE-DELETE -->
+<form>
+</form>
+<br>
+<!-- COMPANY TABLE UPDATE-DELETE -->
+<form>
 </form>
 <br>
 <!-- END OF BODY -->

@@ -19,7 +19,7 @@ if(isset($_POST['TESTaddReviewButton']))
         $dateCreated = date("Y/m/d");
     }
 
-    $sql = "INSERT INTO reviews VALUES ('$title','$rating','$review','$dateCreated','$user')";
+    $sql = "INSERT INTO reviews VALUES ('$title','$rating',\"$review\",'$dateCreated','$user')";
     if(mysqli_query($conn, $sql)){
         echo "New record added successfully.";
         echo "<br>".$sql."<br>";

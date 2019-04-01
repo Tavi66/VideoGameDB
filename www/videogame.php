@@ -17,10 +17,10 @@ $LINK = $_POST['linkToCoverArt'];
 //insert link to cover image, if cover art link provided
 if(!empty($LINK))
 $sql = "INSERT INTO videogame (Title,ReleaseDate,Price,Series, Rating, LinkToCoverImage)
-VALUES ('$TITLE','$RELEASEDATE','$PRICE','$SERIES','$RATING','$LINK')";
+VALUES (\"$TITLE\",'$RELEASEDATE','$PRICE','$SERIES','$RATING','$LINK')";
 else //   
 $sql = "INSERT INTO videogame (Title,ReleaseDate,Price,Series, Rating)
-VALUES ('$TITLE','$RELEASEDATE','$PRICE','$SERIES','$RATING')";
+VALUES (\"$TITLE\",'$RELEASEDATE','$PRICE','$SERIES','$RATING')";
 
 if(mysqli_query($conn, $sql)){
     echo "New record added successfully.";
@@ -105,7 +105,7 @@ for($i=0; $i<count($box); $i++)
 			$sql = "UPDATE videogame SET ";
 if($title != $TITLE)
 {
-	$sql = $sql . " Title='$TITLE' ";
+	$sql = $sql . " Title=\"$TITLE\" ";
 	$counter++;
 }
 if($rating != $RATING)
@@ -162,8 +162,32 @@ else{
 }
 
 }
+}//SERIES
+if(isset($_POST['addSeriesButton']))
+{
+	$series = $_POST['Series'];
+	$dateCreated = $_POST['dateCreated'];
+	$status = $_POST['status'];
+	if($series != "")
+	{
+		echo "Series: " . $series . "<br>";
+		if($dateCreated == NULL)
+		{
+			$dateCreated = date("Y/m/d");
+		}
+		$sql = "INSERT INTO series VALUES ('$series','$dateCreated','$status')";
+		$result = mysqli_query($conn,$sql);
+        if($result){
+	    echo  $sql . "<br>";
+	    echo "New Record added successfully to [series]. <br>"; 
+        } else{
+	    echo "Error: " . $sql . "<br>" . $conn->error;
+		}
+
+	}
+		else echo "No series entered.";
 }
-//GENRE
+//GENRE-PLATFORM-REGION
 if(isset($_POST['addVideoGameInfoButton']))
 {
 	$genre=$_POST['genre'];
@@ -171,7 +195,7 @@ if(isset($_POST['addVideoGameInfoButton']))
 	$title=$_POST['videoGameTitle'];
 	$platform=$_POST['platform'];
 	
-	echo "Data entered. <br>";
+	//echo "Data entered. <br>";
 	if($title != "NULL")
 	{
 		echo "Title: " . $title;
@@ -180,7 +204,7 @@ if(isset($_POST['addVideoGameInfoButton']))
 	 {
 		echo "<br> Genre: " . $genre . "<br>";
 		$sql = "INSERT INTO genre 
-		VALUES ('$title','$genre')";
+		VALUES (\"$title\",'$genre')";
 		$result = mysqli_query($conn,$sql);
         if($result){
 	    echo  $sql . "<br>";
@@ -193,7 +217,7 @@ if(isset($_POST['addVideoGameInfoButton']))
  	 {
 		echo "<br> Region: " . $region . "<br>";
 		$sql = "INSERT INTO region 
-		VALUES ('$title','$region')";
+		VALUES (\"$title\",'$region')";
 		$result = mysqli_query($conn,$sql);	
 		if($result){
 			echo  $sql . "<br>";
@@ -218,7 +242,7 @@ if(isset($_POST['addVideoGameInfoButton']))
 
 	 }
 
-	}
+	} else echo "Error: No Title Selected.";
 }
 $conn -> close();
 ?>
